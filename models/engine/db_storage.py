@@ -8,6 +8,13 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 import os
 
 
+classes = {
+    'BaseModel': BaseModel,
+    'User': User,
+    # Add other model classes here if necessary
+}
+
+
 class DBStorage:
     """This class manages storage of hbnb models in MySQL"""
     __engine = None

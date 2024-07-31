@@ -7,16 +7,25 @@ from models.base_model import BaseModel, Base
 
 
 class State(BaseModel, Base):
-    """ State class """
+    """ State class for storing state information """
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        # For database storage, define a relationship to City
         cities = relationship(
-                "City", backref="state", cascade="all, delete-orphan")
+            "City",
+            backref="state",
+            cascade="all, delete-orphan"
+        )
     else:
         @property
         def cities(self):
+            """Getter attribute for file storage.
+
+            Returns the list of City instances where
+            state_id equals the current State.id
+            """
             from models import storage
             from models.city import City
             city_list = []
